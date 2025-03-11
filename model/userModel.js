@@ -1,4 +1,6 @@
+const sql = require('mssql');
 const poolPromise = require('../db');
+
 
 async function getAllUsers(req, res) {
     try {
@@ -11,4 +13,19 @@ async function getAllUsers(req, res) {
     }
 }
 
-module.exports = { getAllUsers };
+async function getUserById(req, uuid) {
+
+    try {
+
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('id', sql.UniqueIdentifier, uuid)
+            .query('SELECT * FROM LOGIN_DETAILS WHERE id = @id');
+        console.log(uuid, result.recordset[0]);
+        return result.recordset[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
+module.exports = { getAllUsers, getUserById };
