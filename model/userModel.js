@@ -21,7 +21,6 @@ async function getUserById(req, uuid) {
         const result = await pool.request()
             .input('id', sql.UniqueIdentifier, uuid)
             .query('SELECT * FROM LOGIN_DETAILS WHERE id = @id');
-        console.log(uuid, result.recordset[0]);
         return result.recordset[0];
     } catch (err) {
         throw err;

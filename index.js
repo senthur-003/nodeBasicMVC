@@ -1,18 +1,16 @@
 const express = require('express');
 const app = express();
+
 const bodyParser = require('body-parser');
-const cors = require('cors');
-const sql = require('mssql');
-
-
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+const cors = require('cors');
 app.use(cors());
+
 require('dotenv').config();
 
-
 Port = 3000;
-
 const poolPromise = require('./db');
 
 const userRoutes = require('./routes/userRoute');
@@ -29,7 +27,6 @@ app.get('/user', async (req, res) => {
         res.status(500).send({ message: 'Error Creating item', error: err.message });
     }
 });
-
 
 app.listen(Port, () => {
     console.log(`Server is running in port : ${Port}`);
