@@ -13,6 +13,8 @@ require('dotenv').config();
 Port = 3000;
 const poolPromise = require('./db');
 
+const path = require('path');
+
 const userRoutes = require('./routes/userRoute');
 app.use('/users', userRoutes);
 
@@ -27,6 +29,14 @@ app.get('/user', async (req, res) => {
         res.status(500).send({ message: 'Error Creating item', error: err.message });
     }
 });
+
+
+
+
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'view', 'login.html'));
+});
+
 
 app.listen(Port, () => {
     console.log(`Server is running in port : ${Port}`);
