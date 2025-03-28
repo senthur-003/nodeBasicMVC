@@ -1,7 +1,6 @@
 const sql = require('mssql');
 const poolPromise = require('../db');
 
-
 async function getAllUsers(req, res) {
     try {
         const pool = await poolPromise;
@@ -38,6 +37,4 @@ async function getUserProfroileById(req, res) {
         throw err;
     }
 }
-
-
     module.exports = { getAllUsers, getUserById, getUserProfroileById };
