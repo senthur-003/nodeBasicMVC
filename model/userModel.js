@@ -13,13 +13,12 @@ async function getAllUsers(req, res) {
     }
 }
 
-async function getUserById(req, uuid) {
-
+async function getUserById(req, id) {
     try {
 
         const pool = await poolPromise;
         const result = await pool.request()
-            .input('id', sql.UniqueIdentifier, uuid)
+            .input('id', sql.UniqueIdentifier, id)
             .query('SELECT * FROM LOGIN_DETAILS WHERE id = @id');
         return result.recordset[0];
     } catch (err) {
@@ -27,4 +26,18 @@ async function getUserById(req, uuid) {
     }
 }
 
-module.exports = { getAllUsers, getUserById };
+async function getUserProfroileById(req, res) {
+    try {
+
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('id', sql.UniqueIdentifier, req.id)
+            .query('SELECT * FROM LOGIN_DETAILS WHERE id = @req.id');
+        return result.recordset[0];
+    } catch (err) {
+        throw err;
+    }
+}
+
+
+    module.exports = { getAllUsers, getUserById, getUserProfroileById };

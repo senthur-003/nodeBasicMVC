@@ -1,4 +1,4 @@
-const { getAllUsers, getUserById } = require('../model/userModel');
+const { getAllUsers, getUserById, getUserProfroileById } = require('../model/userModel');
 
 async function getUsers(req, res) {
     try {
@@ -30,5 +30,18 @@ async function viewUser(req, res) {
     }
 }
 
+async function viewUserDetail(req, res) {
+    try {
+        const Id = req.id;
+        const result = await getUserProfroileById(req, res);
+        if (result) {
+            res.status(200).send({ message: 'User details fetched successfully', result });
+        } else {
+            res.status(404).send("user not found");
+        }
+    } catch (error) {
 
-module.exports = { getUsers, viewUser };
+    }
+}
+
+module.exports = { getUsers, viewUser, viewUserDetail };
