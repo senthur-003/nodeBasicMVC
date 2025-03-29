@@ -14,7 +14,6 @@ async function getAllUsers(req, res) {
 
 async function getUserById(req, id) {
     try {
-
         const pool = await poolPromise;
         const result = await pool.request()
             .input('id', sql.UniqueIdentifier, id)
@@ -27,7 +26,6 @@ async function getUserById(req, id) {
 
 async function getUserProfroileById(req, res) {
     try {
-
         const pool = await poolPromise;
         const result = await pool.request()
             .input('id', sql.UniqueIdentifier, req.id)
@@ -37,4 +35,4 @@ async function getUserProfroileById(req, res) {
         throw err;
     }
 }
-    module.exports = { getAllUsers, getUserById, getUserProfroileById };
+module.exports = { getAllUsers, getUserById, getUserProfroileById };
