@@ -1,4 +1,4 @@
-const { getAllUsers, getUserById, getUserProfileById } = require('../model/userModel');
+const { getAllUsers, getUserById, getUserProfileById, getCCUserList, CCLoginStatus } = require('../model/userModel');
 
 async function getUsers(req, res) {
     try {
@@ -42,4 +42,38 @@ async function viewUserDetail(req, res) {
     }
 }
 
-module.exports = { getUsers, viewUser, viewUserDetail };
+async function getCCUser(req, res) {
+    try {
+        const result = await getCCUserList(req, res);
+        if (result) {
+            const sanitizedResult = result.map(user => {
+                const { PASSWORD, ...safeUser } = user;
+                return safeUser;
+            });
+
+            res.status(200).send({ message: 'user list', Users: sanitizedResult });
+        }
+        else {
+            res.status(404).send('user not found');
+        }
+
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+async function CCLogin(req, res) {
+    try {
+        const result = await CCLoginStatus(req, res);
+        if (result) {
+            const { PASSWORD, ...User } = result;
+            res.status(200).send({ message: 'User details fetched successfully', User });
+        } else {
+            res.status(404).send("user not found");
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+module.exports = { getUsers, viewUser, viewUserDetail, getCCUser, CCLogin };

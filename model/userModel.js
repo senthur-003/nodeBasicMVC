@@ -36,4 +36,28 @@ async function getUserProfileById(req, res) {
     }
 }
 
-module.exports = { getAllUsers, getUserById, getUserProfileById };
+async function getCCUserList(req, res) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .query('SELECT * FROM CC_ADMIN');
+        return result.recordset;
+    } catch (error) {
+        throw error;
+    }
+}
+
+async function CCLoginStatus(req, res) {
+    const { email } = req.body;
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .input('email', email)
+            .query('SELECT * FROM CC_ADMIN WHERE EMAIL = @email ');
+        return result.recordset[0];
+    } catch (error) {
+        throw error
+    }
+}
+
+module.exports = { getAllUsers, getUserById, getUserProfileById, getCCUserList, CCLoginStatus };
