@@ -1,4 +1,4 @@
-const { getAllUsers, getUserById, getUserProfroileById } = require('../model/userModel');
+const { getAllUsers, getUserById, getUserProfileById } = require('../model/userModel');
 
 async function getUsers(req, res) {
     try {
@@ -15,7 +15,6 @@ async function getUsers(req, res) {
 }
 
 async function viewUser(req, res) {
-
     try {
         const id = req.params.id;
         const user = await getUserById(req, id);
@@ -24,7 +23,6 @@ async function viewUser(req, res) {
         } else {
             res.status(404).send("user not found");
         }
-
     } catch (err) {
         res.status(500).send("Error fetching user.");
     }
@@ -33,7 +31,7 @@ async function viewUser(req, res) {
 async function viewUserDetail(req, res) {
     try {
         const Id = req.id;
-        const result = await getUserProfroileById(req, res);
+        const result = await getUserProfileById(req, res);
         if (result) {
             res.status(200).send({ message: 'User details fetched successfully', result });
         } else {

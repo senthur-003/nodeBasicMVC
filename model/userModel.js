@@ -24,7 +24,7 @@ async function getUserById(req, id) {
     }
 }
 
-async function getUserProfroileById(req, res) {
+async function getUserProfileById(req, res) {
     try {
         const pool = await poolPromise;
         const result = await pool.request()
@@ -35,4 +35,5 @@ async function getUserProfroileById(req, res) {
         throw err;
     }
 }
-module.exports = { getAllUsers, getUserById, getUserProfroileById };
+
+module.exports = { getAllUsers, getUserById, getUserProfileById };
