@@ -48,12 +48,13 @@ async function getCCUserList(req, res) {
 }
 
 async function CCLoginStatus(req, res) {
-    const { email } = req.body;
+    const { email,password } = req.body;
     try {
         const pool = await poolPromise;
         const result = await pool.request()
             .input('email', email)
-            .query('SELECT * FROM CC_ADMIN WHERE EMAIL = @email ');
+            .input('password',password)
+            .query('SELECT * FROM CC_ADMIN WHERE EMAIL = @email AND PASSWORD=@password');
         return result.recordset[0];
     } catch (error) {
         throw error
