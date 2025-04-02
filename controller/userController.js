@@ -1,4 +1,4 @@
-const { getAllUsers, getUserById, getUserProfileById, getCCUserList, CCLoginStatus } = require('../model/userModel');
+const { getAllUsers, getUserById, getUserProfileById, getCCUserList, CCLoginStatus, CCAdminMenu } = require('../model/userModel');
 
 async function getUsers(req, res) {
     try {
@@ -76,4 +76,17 @@ async function CCLogin(req, res) {
     }
 }
 
-module.exports = { getUsers, viewUser, viewUserDetail, getCCUser, CCLogin };
+async function CCAdmMenu(req, res) {
+    try {
+        const result = await CCAdminMenu(req, res);
+        if (result) {
+            res.status(200).send({ message: 'User details fetched successfully', result });
+        } else {
+            res.status(404).send("user not found");
+        }
+    } catch (error) {
+        res.status(500).send(error);
+    }
+}
+
+module.exports = { getUsers, viewUser, viewUserDetail, getCCUser, CCLogin, CCAdmMenu };

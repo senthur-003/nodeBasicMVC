@@ -48,17 +48,28 @@ async function getCCUserList(req, res) {
 }
 
 async function CCLoginStatus(req, res) {
-    const { email,password } = req.body;
+    const { email, password } = req.body;
     try {
         const pool = await poolPromise;
         const result = await pool.request()
             .input('email', email)
-            .input('password',password)
+            .input('password', password)
             .query('SELECT * FROM CC_ADMIN WHERE EMAIL = @email AND PASSWORD=@password');
         return result.recordset[0];
     } catch (error) {
-        throw error
+        throw error;
     }
 }
 
-module.exports = { getAllUsers, getUserById, getUserProfileById, getCCUserList, CCLoginStatus };
+async function CCAdminMenu(req, res) {
+    try {
+        const pool = await poolPromise;
+        const result = await pool.request()
+            .query('SELECT * FROM CC_ADMINMENU');
+        return result.recordset;
+    } catch (error) {
+        throw error;
+    }
+}
+
+module.exports = { getAllUsers, getUserById, getUserProfileById, getCCUserList, CCLoginStatus, CCAdminMenu };
