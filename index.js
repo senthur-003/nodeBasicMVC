@@ -13,7 +13,7 @@ require('dotenv').config();
 Port = 3000;
 const poolPromise = require('./db');
 
-const path = require('path');
+const path = require('path');//is used to connect the local pages to the browser
 
 const userRoutes = require('./routes/userRoute');
 app.use('/users', userRoutes);
